@@ -2,49 +2,39 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Una pequeña sorpresa</title>
+<title>Un mensaje para ti</title>
 
 <style>
+
 body{
 margin:0;
-font-family:Arial;
-background:linear-gradient(135deg,#ff9ecf,#ffd6eb);
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#ff7eb3,#ffb6d9,#ffd6eb);
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-overflow:hidden;
 text-align:center;
+overflow:hidden;
 }
 
 .caja{
 background:white;
 padding:40px;
 border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
+box-shadow:0 15px 35px rgba(0,0,0,0.2);
 max-width:420px;
-z-index:2;
+animation:entrada 1s ease;
 }
 
-button{
-margin:8px;
-padding:12px 22px;
+h2{
+color:#ff3d8e;
+}
+
+#mensaje{
 font-size:18px;
-border:none;
-border-radius:10px;
-background:#ff4f9a;
-color:white;
-cursor:pointer;
-transition:0.3s;
-}
-
-button:hover{
-transform:scale(1.1);
-background:#e63e86;
-}
-
-.oculto{
-display:none;
+line-height:1.5;
+margin-top:20px;
 }
 
 .flor{
@@ -60,93 +50,112 @@ opacity:0.8;
 100%{transform:translateY(110vh)}
 }
 
-.corazon{
-position:absolute;
-font-size:26px;
-animation:flotar 3s linear forwards;
+@keyframes entrada{
+from{opacity:0;transform:scale(.8)}
+to{opacity:1;transform:scale(1)}
 }
 
-@keyframes flotar{
-0%{transform:translateY(0);opacity:1}
-100%{transform:translateY(-200px);opacity:0}
-}
 </style>
+
 </head>
 
 <body>
 
 <div class="caja">
 
-<h2>🌸 Tengo un pequeño juego para ti</h2>
+<h2>🌸 Un pequeño mensaje para ti</h2>
 
-<p id="texto">Paso 1: Elige un número</p>
+<p id="fecha"></p>
 
-<div id="numeros">
-<button onclick="paso2()">1</button>
-<button onclick="paso2()">2</button>
-<button onclick="paso2()">3</button>
-</div>
-
-<div id="letras" class="oculto">
-
-<p>Paso 2: Elige una letra</p>
-
-<button onclick="final()">A</button>
-<button onclick="final()">B</button>
-<button onclick="final()">C</button>
-
-</div>
-
-<div id="mensajeFinal" class="oculto">
-
-<h3>🎁 Resultado</h3>
-
-<p>
-En realidad no importaba el número ni la letra que eligieras...
-<br><br>
-Solo quería aprovechar este pequeño juego para decirte algo:
-<br><br>
-Eres una mujer increíble y tienes una energía muy bonita.
-<br><br>
-Feliz Día de la Mujer 🌸
-</p>
-
-</div>
+<div id="mensaje"></div>
 
 </div>
 
 <script>
 
-function paso2(){
-document.getElementById("numeros").style.display="none"
-document.getElementById("letras").classList.remove("oculto")
+// obtener fecha
+let hoy = new Date()
+
+let dia = hoy.getDate()
+let mes = hoy.getMonth()+1
+
+// calcular día del año
+let inicio = new Date(hoy.getFullYear(),0,0)
+let diff = hoy - inicio
+let diaDelAño = Math.floor(diff / (1000*60*60*24))
+
+// mensajes especiales
+let mensajeEspecial = ""
+
+if(mes==3 && dia==8){
+mensajeEspecial="Hoy es el Día Internacional de la Mujer 🌸. Solo quería recordarte que eres una mujer increíble, fuerte y que inspiras más de lo que imaginas."
 }
 
-function final(){
-document.getElementById("letras").style.display="none"
-document.getElementById("mensajeFinal").classList.remove("oculto")
-corazones()
+else if(mes==2 && dia==14){
+mensajeEspecial="En un día donde se celebra el amor, solo paso a decirte que tu forma de ser tiene algo muy bonito."
 }
 
-function corazones(){
-for(let i=0;i<20;i++){
-let c=document.createElement("div")
-c.className="corazon"
-c.innerHTML="💖"
-c.style.left=Math.random()*100+"vw"
-c.style.top=Math.random()*80+"vh"
-document.body.appendChild(c)
-}
+else if(mes==11 && dia==25){
+mensajeEspecial="Hoy se recuerda la importancia de respetar y valorar a cada mujer. Y tú eres alguien que merece todo el respeto y admiración."
 }
 
+// mensajes generales (365 variaciones)
+let cualidades=[
+"tu sonrisa",
+"tu forma de pensar",
+"tu energía",
+"tu manera de ver la vida",
+"tu autenticidad",
+"tu forma de tratar a las personas",
+"tu inteligencia",
+"tu sensibilidad",
+"tu alegría",
+"tu fortaleza"
+]
+
+let frases=[
+"tiene algo especial",
+"hace el día mejor",
+"inspira a las personas",
+"deja huella en quienes te conocen",
+"ilumina cualquier lugar",
+"es difícil de encontrar en otras personas",
+"vale mucho más de lo que imaginas",
+"es una de tus mejores cualidades"
+]
+
+let cualidad=cualidades[diaDelAño % cualidades.length]
+let frase=frases[diaDelAño % frases.length]
+
+let mensajeDiario = "Mensaje del día " + diaDelAño + " 🌸<br><br>" +
+"Hoy solo quería recordarte que " + cualidad + " " + frase + "."
+
+// mostrar mensaje
+document.getElementById("mensaje").innerHTML = mensajeEspecial || mensajeDiario
+
+document.getElementById("fecha").innerHTML = hoy.toLocaleDateString("es-CO",{
+weekday:'long',
+year:'numeric',
+month:'long',
+day:'numeric'
+})
+
+// flores animadas
 function flores(){
-for(let i=0;i<25;i++){
+for(let i=0;i<30;i++){
+
 let flor=document.createElement("div")
+
 flor.className="flor"
+
 flor.innerHTML="🌸"
+
 flor.style.left=Math.random()*100+"vw"
+
 flor.style.animationDuration=(Math.random()*5+4)+"s"
+
 document.body.appendChild(flor)
+
 }
 }
 
