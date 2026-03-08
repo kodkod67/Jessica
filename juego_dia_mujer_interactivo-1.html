@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Una pequeña sorpresa</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#ff9ecf,#ffd6eb);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+overflow:hidden;
+text-align:center;
+}
+
+.caja{
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+max-width:420px;
+z-index:2;
+}
+
+button{
+margin:8px;
+padding:12px 22px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:#ff4f9a;
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.1);
+background:#e63e86;
+}
+
+.oculto{
+display:none;
+}
+
+.flor{
+position:absolute;
+top:-50px;
+font-size:22px;
+animation:caer linear infinite;
+opacity:0.8;
+}
+
+@keyframes caer{
+0%{transform:translateY(0)}
+100%{transform:translateY(110vh)}
+}
+
+.corazon{
+position:absolute;
+font-size:26px;
+animation:flotar 3s linear forwards;
+}
+
+@keyframes flotar{
+0%{transform:translateY(0);opacity:1}
+100%{transform:translateY(-200px);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="caja">
+
+<h2>🌸 Tengo un pequeño juego para ti</h2>
+
+<p id="texto">Paso 1: Elige un número</p>
+
+<div id="numeros">
+<button onclick="paso2()">1</button>
+<button onclick="paso2()">2</button>
+<button onclick="paso2()">3</button>
+</div>
+
+<div id="letras" class="oculto">
+
+<p>Paso 2: Elige una letra</p>
+
+<button onclick="final()">A</button>
+<button onclick="final()">B</button>
+<button onclick="final()">C</button>
+
+</div>
+
+<div id="mensajeFinal" class="oculto">
+
+<h3>🎁 Resultado</h3>
+
+<p>
+En realidad no importaba el número ni la letra que eligieras...
+<br><br>
+Solo quería aprovechar este pequeño juego para decirte algo:
+<br><br>
+Eres una mujer increíble y tienes una energía muy bonita.
+<br><br>
+Feliz Día de la Mujer 🌸
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+function paso2(){
+document.getElementById("numeros").style.display="none"
+document.getElementById("letras").classList.remove("oculto")
+}
+
+function final(){
+document.getElementById("letras").style.display="none"
+document.getElementById("mensajeFinal").classList.remove("oculto")
+corazones()
+}
+
+function corazones(){
+for(let i=0;i<20;i++){
+let c=document.createElement("div")
+c.className="corazon"
+c.innerHTML="💖"
+c.style.left=Math.random()*100+"vw"
+c.style.top=Math.random()*80+"vh"
+document.body.appendChild(c)
+}
+}
+
+function flores(){
+for(let i=0;i<25;i++){
+let flor=document.createElement("div")
+flor.className="flor"
+flor.innerHTML="🌸"
+flor.style.left=Math.random()*100+"vw"
+flor.style.animationDuration=(Math.random()*5+4)+"s"
+document.body.appendChild(flor)
+}
+}
+
+flores()
+
+</script>
+
+</body>
+</html>
