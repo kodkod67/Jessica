@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
-<title>Un mensaje para ti</title>
+<title>Un mensaje para ti 🌸</title>
 
 <style>
 
 body{
 margin:0;
-font-family:'Segoe UI',sans-serif;
+font-family:Arial, Helvetica, sans-serif;
 background:linear-gradient(135deg,#ff7eb3,#ffb6d9,#ffd6eb);
 height:100vh;
 display:flex;
@@ -22,9 +23,8 @@ overflow:hidden;
 background:white;
 padding:40px;
 border-radius:20px;
-box-shadow:0 15px 35px rgba(0,0,0,0.2);
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
 max-width:420px;
-animation:entrada 1s ease;
 }
 
 h2{
@@ -32,9 +32,9 @@ color:#ff3d8e;
 }
 
 #mensaje{
+margin-top:20px;
 font-size:18px;
 line-height:1.5;
-margin-top:20px;
 }
 
 .flor{
@@ -50,20 +50,14 @@ opacity:0.8;
 100%{transform:translateY(110vh)}
 }
 
-@keyframes entrada{
-from{opacity:0;transform:scale(.8)}
-to{opacity:1;transform:scale(1)}
-}
-
 </style>
-
 </head>
 
 <body>
 
 <div class="caja">
 
-<h2>🌸 Un pequeño mensaje para ti</h2>
+<h2>🌸 Un mensaje para ti</h2>
 
 <p id="fecha"></p>
 
@@ -73,93 +67,96 @@ to{opacity:1;transform:scale(1)}
 
 <script>
 
-// obtener fecha
-let hoy = new Date()
+// fecha actual
+const hoy = new Date()
 
-let dia = hoy.getDate()
-let mes = hoy.getMonth()+1
+const dia = hoy.getDate()
+const mes = hoy.getMonth() + 1
+const año = hoy.getFullYear()
 
-// calcular día del año
-let inicio = new Date(hoy.getFullYear(),0,0)
-let diff = hoy - inicio
-let diaDelAño = Math.floor(diff / (1000*60*60*24))
+// calcular día del año correctamente
+const inicioAño = new Date(año, 0, 0)
+const diff = hoy - inicioAño
+const unDia = 1000 * 60 * 60 * 24
+const diaDelAño = Math.floor(diff / unDia)
+
+// mostrar fecha bonita
+document.getElementById("fecha").innerText =
+hoy.toLocaleDateString("es-CO",{weekday:"long",year:"numeric",month:"long",day:"numeric"})
 
 // mensajes especiales
-let mensajeEspecial = ""
+let mensaje = ""
 
-if(mes==3 && dia==8){
-mensajeEspecial="Hoy es el Día Internacional de la Mujer 🌸. Solo quería recordarte que eres una mujer increíble, fuerte y que inspiras más de lo que imaginas."
+if(mes===3 && dia===8){
+mensaje="🌸 Hoy es el Día Internacional de la Mujer. Solo quería recordarte que eres una mujer increíble y que tu forma de ser inspira más de lo que imaginas."
 }
 
-else if(mes==2 && dia==14){
-mensajeEspecial="En un día donde se celebra el amor, solo paso a decirte que tu forma de ser tiene algo muy bonito."
+else if(mes===2 && dia===14){
+mensaje="💌 Hoy es un día donde muchos hablan de amor, pero yo solo quería decir que tu forma de ser tiene algo muy especial."
 }
 
-else if(mes==11 && dia==25){
-mensajeEspecial="Hoy se recuerda la importancia de respetar y valorar a cada mujer. Y tú eres alguien que merece todo el respeto y admiración."
+else if(mes===11 && dia===25){
+mensaje="🌸 Hoy se recuerda la importancia de respetar y valorar a cada mujer. Y tú eres alguien que merece admiración."
 }
 
-// mensajes generales (365 variaciones)
-let cualidades=[
+// mensajes diarios (se generan según el día)
+if(mensaje===""){
+
+const cualidades=[
 "tu sonrisa",
 "tu forma de pensar",
 "tu energía",
 "tu manera de ver la vida",
 "tu autenticidad",
-"tu forma de tratar a las personas",
 "tu inteligencia",
-"tu sensibilidad",
 "tu alegría",
+"tu forma de tratar a las personas",
+"tu sensibilidad",
 "tu fortaleza"
 ]
 
-let frases=[
-"tiene algo especial",
+const frases=[
 "hace el día mejor",
 "inspira a las personas",
 "deja huella en quienes te conocen",
 "ilumina cualquier lugar",
 "es difícil de encontrar en otras personas",
 "vale mucho más de lo que imaginas",
-"es una de tus mejores cualidades"
+"es una de tus mejores cualidades",
+"puede cambiar el día de alguien"
 ]
 
-let cualidad=cualidades[diaDelAño % cualidades.length]
-let frase=frases[diaDelAño % frases.length]
+const cualidad = cualidades[diaDelAño % cualidades.length]
+const frase = frases[diaDelAño % frases.length]
 
-let mensajeDiario = "Mensaje del día " + diaDelAño + " 🌸<br><br>" +
-"Hoy solo quería recordarte que " + cualidad + " " + frase + "."
+mensaje = "🌸 Mensaje del día " + diaDelAño + "<br><br>Hoy solo quería recordarte que " + cualidad + " " + frase + "."
+}
 
 // mostrar mensaje
-document.getElementById("mensaje").innerHTML = mensajeEspecial || mensajeDiario
+document.getElementById("mensaje").innerHTML = mensaje
 
-document.getElementById("fecha").innerHTML = hoy.toLocaleDateString("es-CO",{
-weekday:'long',
-year:'numeric',
-month:'long',
-day:'numeric'
-})
+// flores cayendo
+function crearFlores(){
 
-// flores animadas
-function flores(){
-for(let i=0;i<30;i++){
+for(let i=0;i<25;i++){
 
-let flor=document.createElement("div")
+let flor = document.createElement("div")
 
 flor.className="flor"
 
 flor.innerHTML="🌸"
 
-flor.style.left=Math.random()*100+"vw"
+flor.style.left = Math.random()*100 + "vw"
 
-flor.style.animationDuration=(Math.random()*5+4)+"s"
+flor.style.animationDuration = (Math.random()*5+5)+"s"
 
 document.body.appendChild(flor)
 
 }
+
 }
 
-flores()
+crearFlores()
 
 </script>
 
